@@ -3,23 +3,22 @@
 #### 介绍
 笔记应用,前后端分离,具有搜索笔记、富媒体编辑器、历史记录、笔记标签等功能。
 
-(本人把原博主的前端也搬过来了(´・ω・`))
 
 
 #### 软件架构
 Gin、Gorm、MySQL、Redis、JWT、Zap
 
-原项目有许多错误会影响运行
+原项目有一些错误会影响运行
 
 而且原博主有许多重要的部分没有写在README，本人在学习golang期间查看此项目发现了部分问题所在并做了修改，现已可以轻松部署
 
-不过遗憾的是本人的能力不足以支撑自己完善此项目，"发送验证码"这一功能无法实现，导致"注册"功能也难以得到验证
+
 
 后续如有进展我会继续更新
 
 ### 本地部署
 #### 修改配置文件(假如您使用默认的config.yaml)
-修改config.yaml中mysql的username，password；redis的addr和password(如果您采用的不是默认)
+修改config.yaml中mysql的username，password；redis的addr和password(如果您采用的不是默认)七牛云和邮箱验证码按需求配置即可
 #### 运行后端
 在终端输入go run main.go然后打开您的mysql可视化工具查看确保存在evernote数据库
 在env_users表中添加id为1，deleted_at为NULL，uuid为11111111-1111-1111-1111-111111111111，username为demo，password为fe01ce2a7fbac8fafaed7c982a04e229的用户(这里的密码是加密后的"demo")

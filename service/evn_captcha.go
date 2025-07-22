@@ -1,6 +1,7 @@
 package service
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"evernote-client/global"
 	"fmt"
@@ -87,6 +88,7 @@ func Send(to string, code string) (err error) {
 	m.SetHeader("Subject", fmt.Sprintf("用户注册验证码：%s - note.icewx.com", code))
 	m.SetBody("text/html", fmt.Sprintf("您注册的验证码为：%s，10分钟内有效", code))
 	mailer := gomail.NewDialer(global.CONFIG.Mail.Host, global.CONFIG.Mail.Port, global.CONFIG.Mail.From, global.CONFIG.Mail.Secret)
+	mailer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err = mailer.DialAndSend(m); err != nil {
 		global.LOG.Error(err.Error())
 		return err

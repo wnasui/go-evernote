@@ -43,6 +43,13 @@ func Routers() *gin.Engine {
 		router.InitHistoryRouter(PrivateGroup)  // 注册笔记历史记录路由
 		router.InitTrashRouter(PrivateGroup)    // 注册废纸篓路由
 		router.InitUtilsRouter(PrivateGroup)    // 注册工具类路由
+		router.InitLikeRouter(PrivateGroup)     // 注册点赞路由
+	}
+
+	// 协同编辑路由（不需要JWT认证，因为WebSocket连接）
+	CollaborationGroup := Router.Group("/api/v1")
+	{
+		router.InitCollaborationRouter(CollaborationGroup) // 注册协同编辑路由
 	}
 	global.LOG.Info("router register success")
 

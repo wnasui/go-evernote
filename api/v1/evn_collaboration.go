@@ -17,11 +17,30 @@ var crdtService = service.NewCRDTService()
 // 协同编辑WebSocket连接
 func CollaborationWebSocket(c *gin.Context) {
 	//来源
-	upgrader := websocket.Upgrader{
-		CheckOrigin: func(r *http.Request) bool {
-			return true
-		},
-	}
+    upgrader := websocket.Upgrader{
+        CheckOrigin: func(r *http.Request) bool {
+            // 基础来源校验：仅允许同源与常见本地开发域名，生产可改为配置白名单
+            origin := r.Header.Get("Origin")
+            if origin == "" {
+                return true
+            }
+            // 允许同源、常见本地地址
+            allowed := []string{
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+                "http://localhost:8080",
+                "http://127.0.0.1:8080",
+                "http://localhost:8888",
+                "http://127.0.0.1:8888",
+            }
+            for _, a := range allowed {
+                if origin == a {
+                    return true
+                }
+            }
+            return false
+        },
+    }
 
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
